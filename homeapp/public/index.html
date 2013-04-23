@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<script src="http://jquery-ui-map.googlecode.com/svn/trunk/ui/min/jquery.ui.map.full.min.js"></script>
+		<script src="js/homeapp.js"></script>
+		<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+	</head>
+	<body>
+		<!-- Home -->
+		<div data-role="page" id="home">
+		    <div data-theme="" data-role="header">
+      		  <a data-role="button" href="" id="login" class="ui-btn-right">Login</a>
+	        <h3>
+	            Home Blabber
+	        </h3>
+    		</div>
+		    <div data-role="content">
+		        <a href="#searchByAddress" id="searchhomes" data-role="button" data-icon="search">Search Homes</a>
+		        <a href="#" id="button-my-requests" data-role="button" data-icon="search">My Requests</a>
+		        <a href="#" id="button-my-bids" data-role="button" data-icon="search">My Bids</a>
+		        <a href="#" id="button-create-new-request"  data-role="button" data-icon="search">Create New Request</a>
+		    </div>
+		    
+		    <div data-role="popup" id="popup-my-homes" data-theme="a">
+				<ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="b" id='list-popup-my-homes'>
+					
+				</ul>
+			</div>
+			<div data-role="popup" id="popup-no-homes" data-theme="a">
+					<p>You do not have any homes associated</p>
+					<p>Contact admin@homeblabber.com</p>
+			</div>
+		</div>
+		<!-- Search Homes -->
+		<div data-role="page" id="searchByAddress">
+		    <div data-theme="a" data-role="header">
+		     <a data-role="button" href="" class="ui-btn-left" data-rel="back" data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" href="" class="ui-btn-right">
+            	Add Home
+        	</a>
+		        <h3>
+		            Search Homes
+		        </h3>
+		    </div>
+		    <div data-role="content">
+		        <div data-role="fieldcontain" id="addressSearch">
+		            <fieldset data-role="controlgroup">
+		                <label for="addressSearch">
+		                </label>
+		                <input name="" id="addressSearchInput" placeholder="Search by Street / Zip / City"
+		                value="" type="search">
+		            </fieldset>
+		        </div>
+		        <input id="addressSearchButton" type="submit" value="Search">
+		    </div>
+		    <div data-theme="a" data-role="footer" data-position="fixed">
+		        <h3>
+		            Footer
+		        </h3>
+		    </div>
+		</div>
+
+		<div data-role="page" id="places">
+		    <div data-theme="" data-role="header">
+		    <a data-role="button" href="" class="ui-btn-left" data-rel="back" data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" href="" class="ui-btn-right">
+            	Add Home
+        	</a>
+		        <h1>
+		            Search Homes
+		        </h1>
+		    </div>
+		    <div data-role="content">
+		       <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+					<div id="map_canvas" style="height:300px;"></div>
+				</div>
+
+		    </div>
+		</div>
+		<!--  Home details-->
+		<div data-role="page" id="homedetails">
+		    <div data-theme="" data-role="header">
+		        <h3 id="homeaddress">
+		        </h3>
+		        
+		    </div>
+		    <div data-role="content">
+		        <a href="#reviews" id="showReviews" data-role="button" data-icon="search" homeuuid="">Reviews</a>
+		        <a href="#page-show-my-requests" id="button-show-requests-for-home" data-role="button" data-icon="search" homeuuid="">Requests</a>
+		    </div>
+		</div>
+		
+		<!--  Reviews-->
+		<div data-role="page" id="reviews">
+		    <div data-theme="" data-role="header">
+		        <h3 id="homeaddress_reviewPage">
+		        </h3>
+		        <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" id="" href="#new-review" class="ui-btn-right">
+            	Add Reviews
+        	</a>
+		    </div>
+		    <div data-role="content">
+		        <ul data-role="listview"  id="reviewsList">
+					
+				</ul>
+		    </div>
+		</div>
+		<!-- Create new reviews -->
+		<div data-role="page"  id="new-review">
+          <div data-role="header" >
+            <h1>Add new Review</h1>
+             <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" href="" data-rel="back" data-direction="reverse" class="ui-btn-right">
+            	Cancel
+        	</a>
+          </div>
+          <div data-role="content">
+            <form name="form-create-new-review" id="form-create-new-review">
+              <label for="textarea1">
+                    Review
+                </label>
+                <textarea name="textarea1" id="post-review-data" placeholder="Enter your review"></textarea>
+              <input type="hidden" id="review-homeuuid" value="" class="span4" />
+            </form>
+            <div style="width: 50%; float: left">
+              <button id="btn-create-new-review">Post!</button>
+            </div>
+            <div style="width: 50%; float: right">
+              <a href="#reviews" id="btn-close-update-account-page" data-role="button">Cancel</a>
+            </div>
+          </div>
+        </div>
+        
+		<!--  Comments-->
+		<div data-role="page" id="comments">
+		    <div data-theme="" data-role="header">
+		        <h3 id="homeaddress_commentsPage">
+		        </h3>
+		        <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" href="#new-comment" id ='add-new-comment' class="ui-btn-right">
+            	Add Comments
+        	</a>
+		    </div>
+		    <div data-role="content">
+		        <ul data-role="listview"  id="commentsList">
+					
+				</ul>
+		    </div>
+		</div>
+		<!-- Create new comment -->
+		<div data-role="page"  id="new-comment">
+          <div data-role="header" >
+            <h1>Add new Comment</h1>
+             <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        	</a>
+        	<a data-role="button" href="" data-rel="back" data-direction="reverse" class="ui-btn-right">
+            	Cancel
+        	</a>
+          </div>
+          <div data-role="content">
+            <form name="form-create-new-account" id="form-create-new-account">
+              <label for="textarea1">
+                    Comment
+                </label>
+                <textarea name="" id="post-comment-data" placeholder="Enter your comments"></textarea>
+              <input type="hidden" id="comment-homeuuid" value="" class="span4" />
+              <input type="hidden" id="comment-reviewuuid" value="" class="span4" />
+            </form>
+            <div style="width: 50%; float: left">
+              <button id="btn-create-new-comment">Post!</button>
+            </div>
+            <div style="width: 50%; float: right">
+              <a href="#comments" id="btn-close-update-account-page" data-role="button">Cancel</a>
+            </div>
+          </div>
+        </div>
+        
+        <!--  Requests-->
+		<div data-role="page" id="page-show-my-requests">
+		    <div data-theme="" data-role="header">
+		        <h3>
+		        	My Requests
+		        </h3>
+		        <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        		</a>
+        	<a data-role="button" href="#" id ='button-add-new-request' class="ui-btn-right">
+            	Add Request
+        	</a>
+		    </div>
+		    <div data-role="content">
+		        <ul data-role="listview"  id="list-requests">
+					
+				</ul>
+		    </div>
+		</div>
+		
+		 <!--  Bids-->
+		<div data-role="page" id="page-show-bids">
+		    <div data-theme="" data-role="header">
+		        <h3>
+		        	Bids
+		        </h3>
+		        <a data-role="button" href="" class="ui-btn-left" data-rel="back"  data-direction="reverse">
+            	Back
+        		</a>
+        	<a data-role="button" href="#" id ='button-delete-request' class="ui-btn-right">
+            	Delete
+        	</a>
+		    </div>
+		    <div data-role="content">
+		        <ul data-role="listview"  id="list-bids">
+					
+				</ul>
+		    </div>
+		</div>
+		
+		<!-- Create - new - request -->
+	<div data-role="page" id="page-create-new-request">
+	    <div data-theme="a" data-role="header">
+	        <h3>
+	            Header
+	        </h3>
+	    </div>
+	    <div data-role="content">
+	        <div data-role="fieldcontain">
+	            <label for="selectmenu1">
+	                Category
+	            </label>
+	            <select name="">
+	                <option value="Plumbing">
+	                    Plumbing
+	                </option>
+	                <option value="Electrician">
+	                    Electrician
+	                </option>
+	                <option value="Carpentar">
+	                    Carpentar
+	                </option>
+	            </select>
+	        </div>
+	        <div data-role="fieldcontain">
+	            <fieldset data-role="controlgroup">
+	                <label for="textinput2">
+	                    Budget
+	                </label>
+	                <input name="" id="textinput2" placeholder="" value="" type="text">
+	            </fieldset>
+	        </div>
+	        <div data-role="fieldcontain">
+	            <fieldset data-role="controlgroup">
+	                <label for="textinput3">
+	                    Time
+	                </label>
+	                <input name="" id="textinput3" placeholder="" value="" type="text">
+	            </fieldset>
+	        </div>
+	        <div data-role="fieldcontain">
+	            <fieldset data-role="controlgroup">
+	                <label for="textinput4">
+	                    Comments
+	                </label>
+	                <input name="" id="textinput4" placeholder="" value="" type="text">
+	            </fieldset>
+	        </div>
+	        <input type="submit" value="Submit">
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+	        <h3>
+	            Footer
+	        </h3>
+	    </div>
+	</div>
+		
+	</body>
+</html>
