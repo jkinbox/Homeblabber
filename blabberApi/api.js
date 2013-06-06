@@ -4,9 +4,9 @@ var url = require('url');
 
 var app = new express();
 var client = new usergrid.client({
-    orgName:'homeblabber',
-    appName:'api',
-    URI:'http://localhost:8080',
+    orgName:'mukundhag',
+    appName:'myhome',
+    URI:'https://api.usergrid.com',
     //authType:usergrid.AUTH_APP_USER,
     logging: true, //optional - turn on logging, off by default
     buildCurl: true //optional - turn on curl commands, off by default
@@ -283,9 +283,9 @@ function verifyToken (req, callback){
 	{
 		var token = authHeader.split (" ")[1];
 		var ugclient = new usergrid.client({
-		    orgName:'homeblabber',
-		    appName:'api',
-		    URI:'http://localhost:8080',
+		    orgName:'mukundhag',
+		    appName:'myhome',
+		    URI:'https://api.usergrid.com',
 		    //authType:usergrid.AUTH_APP_USER,
 		    logging: true, //optional - turn on logging, off by default
 		    buildCurl: true //optional - turn on curl commands, off by default
